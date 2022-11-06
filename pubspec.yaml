@@ -39,7 +39,7 @@ dependencies:
   augmented_reality_plugin_wikitude:
     path: ./plugin/augmented_reality_plugin_wikitude/
 
-  http: <latest_version>
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
