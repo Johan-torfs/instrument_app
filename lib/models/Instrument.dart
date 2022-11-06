@@ -8,6 +8,9 @@ class Instrument {
   const Instrument({
     required this.id,
     required this.name,
+    required this.period,
+    required this.description,
+    required this.collection,
   });
 
   factory Instrument.fromJson(Map<String, dynamic> json) {
