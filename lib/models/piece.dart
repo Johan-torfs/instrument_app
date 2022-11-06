@@ -15,13 +15,15 @@ class Piece {
     required this.parts,
   });
 
-  factory Piece.fromJson(Map<String, dynamic> json) {
+factory Piece.fromJson(Map<String, dynamic> json) {
+    List<Part> jsonParts = <Part>[];
+    json['parts'].forEach((part) => jsonParts.add(Part.fromJson(part)));
     return Piece(
       id: json['id'],
       name: json['name'],
       period: json['period'],
       composer: json['composer'],
-      parts: json['parts'].map((part) => (Part.fromJson(part))),
+      parts: jsonParts,
     );
   }
 }
