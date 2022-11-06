@@ -6,14 +6,14 @@ class Musician {
   final String name;
   final int yearOfBirth;
   final int yearOfDeath;
-  final Instrument instrument;
+  final Instrument? instrument;
 
   const Musician({
     required this.id,
     required this.name,
     required this.yearOfBirth,
     required this.yearOfDeath,
-    required this.instrument,
+    this.instrument,
   });
 
   factory Musician.fromJson(Map<String, dynamic> json) {
@@ -22,7 +22,7 @@ class Musician {
       name: utf8.decode(latin1.encode(json['name'])),
       yearOfBirth: json['yearOfBirth'],
       yearOfDeath: json['yearOfDeath'],
-      instrument: Instrument.fromJson(json['instrument']),
+      instrument: json['instrument'] != null ? Instrument.fromJson(json['instrument']) : null,
     );
   }
 }

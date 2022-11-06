@@ -6,23 +6,23 @@ class Review {
   final int rating;
   final String comment;
   final String pieceName;
-  final Piece piece;
+  final Piece? piece;
 
   const Review({
     required this.id,
     required this.rating,
     required this.comment,
     required this.pieceName,
-    required this.piece,
+    this.piece,
   });
 
   factory Review.fromJson(Map<String, dynamic> json) {
     return Review(
       id: json['id'],
       rating: json['rating'],
-      comment: json['comment'],
-      pieceName: json['pieceName'],
-      piece: Piece.fromJson(json['piece']),
+      comment: utf8.decode(latin1.encode(json['comment'])),
+      pieceName: utf8.decode(latin1.encode(json['pieceName'])),
+      piece: json['piece'] != null ? Piece.fromJson(json['piece']) : null,
     );
   }
 }
