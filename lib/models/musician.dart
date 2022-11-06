@@ -1,3 +1,5 @@
+import './instrument.dart';
+
 class Musician {
   final int id;
   final String name;
