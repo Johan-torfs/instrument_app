@@ -39,6 +39,8 @@ dependencies:
   augmented_reality_plugin_wikitude:
     path: ./plugin/augmented_reality_plugin_wikitude/
 
+  http: ^0.13.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
