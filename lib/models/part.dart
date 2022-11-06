@@ -1,4 +1,5 @@
 import './instrument.dart';
+import 'dart:convert';
 
 class Part {
   final String instrument;
@@ -13,8 +14,8 @@ class Part {
 
   factory Part.fromJson(Map<String, dynamic> json) {
     return Part(
-      instrument: json['instrument'],
-      name: json['name'],
+      instrument: utf8.decode(latin1.encode(json['instrument'])),
+      name: utf8.decode(latin1.encode(json['name'])),
       instrumentObj: Instrument.fromJson(json['instrumentObj']),
     );
   }

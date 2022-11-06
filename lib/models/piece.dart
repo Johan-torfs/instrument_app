@@ -1,4 +1,5 @@
 import './part.dart';
+import 'dart:convert';
 
 class Piece {
   final String id;
@@ -20,9 +21,9 @@ factory Piece.fromJson(Map<String, dynamic> json) {
     json['parts'].forEach((part) => jsonParts.add(Part.fromJson(part)));
     return Piece(
       id: json['id'],
-      name: json['name'],
-      period: json['period'],
-      composer: json['composer'],
+      name: utf8.decode(latin1.encode(json['name'])),
+      period: utf8.decode(latin1.encode(json['period'])),
+      composer: utf8.decode(latin1.encode(json['composer'])),
       parts: jsonParts,
     );
   }

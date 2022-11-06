@@ -1,4 +1,5 @@
 import './instrument.dart';
+import 'dart:convert';
 
 class Musician {
   final int id;
@@ -18,7 +19,7 @@ class Musician {
   factory Musician.fromJson(Map<String, dynamic> json) {
     return Musician(
       id: int.parse(json['id']),
-      name: json['name'],
+      name: utf8.decode(latin1.encode(json['name'])),
       yearOfBirth: json['yearOfBirth'],
       yearOfDeath: json['yearOfDeath'],
       instrument: Instrument.fromJson(json['instrument']),

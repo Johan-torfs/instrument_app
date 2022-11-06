@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Instrument {
   final int id;
   final String name;
@@ -16,10 +18,10 @@ class Instrument {
   factory Instrument.fromJson(Map<String, dynamic> json) {
     return Instrument(
       id: int.parse(json['id']),
-      name: json['name'],
-      period: json['period'],
-      description: json['description'],
-      collection: json['collection'],
+      name: utf8.decode(latin1.encode(json['name'])),
+      period: utf8.decode(latin1.encode(json['period'])),
+      description: utf8.decode(latin1.encode(json['description'])),
+      collection: utf8.decode(latin1.encode(json['collection'])),
     );
   }
 }
