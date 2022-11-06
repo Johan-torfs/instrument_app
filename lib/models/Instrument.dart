@@ -1,6 +1,9 @@
 class Instrument {
   final int id;
   final String name;
+  final String period;
+  final String description;
+  final String collection;
 
   const Instrument({
     required this.id,
@@ -9,8 +12,11 @@ class Instrument {
 
   factory Instrument.fromJson(Map<String, dynamic> json) {
     return Instrument(
-      id: json['id'],
+      id: int.parse(json['id']),
       name: json['name'],
+      period: json['period'],
+      description: json['description'],
+      collection: json['collection'],
     );
   }
 }
