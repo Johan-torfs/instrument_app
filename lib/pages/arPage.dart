@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import '../widgets/armultipletargets.dart';
 
-class ArDinoPage extends StatefulWidget {
-  const ArDinoPage({Key? key}) : super(key: key);
+class ArPage extends StatefulWidget {
+  const ArPage({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ArDinoPageState();
+  State<StatefulWidget> createState() => _ArPageState();
 }
 
-class _ArDinoPageState extends State<ArDinoPage> {
+class _ArPageState extends State<ArPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
