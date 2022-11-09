@@ -65,11 +65,11 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
   }
 
   Future<void> onArchitectWidgetCreated() async {
-    architectWidget.load(
-        "samples/03_MultipleTargets_1_MultipleTargets/index.html",
-        onLoadSuccess,
-        onLoadFailed);
-    architectWidget.resume();
+    // architectWidget.load(
+    //     "samples/03_MultipleTargets_1_MultipleTargets/index.html",
+    //     onLoadSuccess,
+    //     onLoadFailed);
+    // architectWidget.resume();
   }
 
   Future<void> onLoadSuccess() async {

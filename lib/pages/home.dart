@@ -1,7 +1,7 @@
-import 'ardino.dart';
 import 'package:flutter/material.dart';
 import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
 import 'package:augmented_reality_plugin_wikitude/wikitude_response.dart';
+import 'arPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,14 +21,12 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: ElevatedButton(
-            onPressed: navigateToDinos, child: const Text("Scan de dino's!")),
+            onPressed: navigateToWikitude, child: const Text("Scan de instrumenten!")),
       ),
     );
   }
 
-  void navigateToDinos() {
-    debugPrint("Wij gaan naar dino's");
-
+  void navigateToWikitude() {
     checkDeviceCompatibility().then((value) => {
           if (value.success)
             {
@@ -37,7 +35,7 @@ class _HomePageState extends State<HomePage> {
                       {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const ArDinoPage()),
+                          MaterialPageRoute(builder: (context) => const ArPage()),
                         )
                       }
                     else
