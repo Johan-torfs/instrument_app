@@ -4,8 +4,8 @@ import 'instrument.dart';
 import 'musicPage.dart';
 import 'musicianPage.dart';
 
-class InstrumentTab extends StatelessWidget {
-  const InstrumentTab({Key? key}) : super(key: key);
+class InstrumentTabs extends StatelessWidget {
+  const InstrumentTabs({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

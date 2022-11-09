@@ -65,11 +65,11 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
   }
 
   Future<void> onArchitectWidgetCreated() async {
-    architectWidget.load(
-        "samples/03_MultipleTargets_1_MultipleTargets/index.html",
-        onLoadSuccess,
-        onLoadFailed);
-    architectWidget.resume();
+    // architectWidget.load(
+    //     "samples/03_MultipleTargets_1_MultipleTargets/index.html",
+    //     onLoadSuccess,
+    //     onLoadFailed);
+    // architectWidget.resume();
   }
 
   Future<void> onLoadSuccess() async {
@@ -79,34 +79,5 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
   Future<void> onLoadFailed(String error) async {
     debugPrint("Failed to load Architect World");
     debugPrint(error);
-  }
-
-  _showBottomModal(context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (builder) {
-        return new Container(
-          color: Colors.transparent,
-          child: new Container(
-            decoration: new BoxDecoration(
-              color: Colors.white,
-              borderRadius: new BorderRadius.only(
-                topLeft: const Radius.circular(10.0),
-                topRight: const Radius.circular(10.0),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10.0,
-                  spreadRadius: 0.0,
-                )
-              ],
-            ),
-            alignment: Alignment.topLeft,
-          ),
-        );
-      }
-    );
   }
 }

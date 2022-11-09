@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
 import 'package:augmented_reality_plugin_wikitude/wikitude_response.dart';
 import 'arPage.dart';
-import '../widgets/instrumentTabs.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,8 +21,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: ElevatedButton(
-            //onPressed: navigateToWikitude, child: const Text("Scan de instrumenten!")),
-            onPressed: () {_showBottomModal(context);}, child: const Text("Scan de instrumenten!")),
+            onPressed: navigateToWikitude, child: const Text("Scan de instrumenten!")),
       ),
     );
   }
@@ -58,36 +56,5 @@ class _HomePageState extends State<HomePage> {
 
   Future<WikitudeResponse> requestARPermissions() async {
     return await WikitudePlugin.requestARPermissions(features);
-  }
-
-
- _showBottomModal(context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (builder) {
-        return new Container(
-          color: Colors.transparent,
-          child: new Container(
-            decoration: new BoxDecoration(
-              color: Colors.white,
-              borderRadius: new BorderRadius.only(
-                topLeft: const Radius.circular(10.0),
-                topRight: const Radius.circular(10.0),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10.0,
-                  spreadRadius: 0.0,
-                )
-              ],
-            ),
-            alignment: Alignment.topLeft,
-            child: InstrumentTab(),
-          ),
-        );
-      }
-    );
   }
 }
