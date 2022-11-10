@@ -15,32 +15,12 @@ var World = {
     firetruckHeight: 0.2,
 
     init: function initFn() {
-        World.createOccluder();
         World.createCones();
         World.createTracker();
     },
 
-    createOccluder: function createOccluderFn() {
-        var occluderScale = 0.0065 * this.firetruckLength;
-
-        this.firetruckOccluder = new AR.Occluder("assets/firetruck_occluder.wt3", {
-            onLoaded: World.showInfoBar,
-            scale: {
-                x: occluderScale,
-                y: occluderScale,
-                z: occluderScale
-            },
-            translate: this.firetruckCenter,
-            rotate: {
-                x: 180
-            },
-            onError: World.onError
-        });
-        World.drawables.push(this.firetruckOccluder);
-    },
-
     createCones: function createConesFn() {
-        var coneDistance = this.firetruckLength * 0.8;
+        var coneDistance = this.firetruckLength * 0.6;
 
         var frontLeftCone = World.getCone(-coneDistance, +coneDistance);
         World.drawables.push(frontLeftCone);
@@ -56,7 +36,7 @@ var World = {
     },
 
     getCone: function getConeFn(positionX, positionZ) {
-        var coneScale = 0.05 * this.firetruckLength;
+        var coneScale = 0.08 * this.firetruckLength;
 
         return new AR.Model("assets/traffic_cone.wt3", {
             scale: {
