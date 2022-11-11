@@ -1,59 +1,22 @@
 var World = {
     loaded: false,
     drawables: [],
-    firetruckRotation: {
-        x: 0,
-        y: 0,
-        z: 0
-    },
-    firetruckCenter: {
-        x: 0,
-        y: -0.14,
-        z: 0
-    },
-    firetruckLength: 0.33,
-    firetruckHeight: 0.2,
 
     init: function initFn() {
-        World.createCones();
+        World.createOverlays();
         World.createTracker();
     },
 
-    createCones: function createConesFn() {
-        var coneDistance = this.firetruckLength * 0.6;
-
-        var frontLeftCone = World.getCone(-coneDistance, +coneDistance);
-        World.drawables.push(frontLeftCone);
-
-        var backLeftCone = World.getCone(+coneDistance, +coneDistance);
-        World.drawables.push(backLeftCone);
-
-        var backRightCone = World.getCone(+coneDistance, -coneDistance);
-        World.drawables.push(backRightCone);
-
-        var frontRightCone = World.getCone(-coneDistance, -coneDistance);
-        World.drawables.push(frontRightCone);
-    },
-
-    getCone: function getConeFn(positionX, positionZ) {
-        var coneScale = 0.08 * this.firetruckLength;
-
-        return new AR.Model("assets/traffic_cone.wt3", {
-            scale: {
-                x: coneScale,
-                y: coneScale,
-                z: coneScale
-            },
-            translate: {
-                x: positionX,
-                y: World.firetruckCenter.y,
-                z: positionZ
-            },
-            rotate: {
-                x: -90
-            },
+    createOverlays: function createOverlaysFn() {
+        this.banner = new AR.ImageResource("assets/banner.jpg", {
             onError: World.onError
         });
+        World.bannerOverlay = new AR.ImageDrawable(this.banner, 0.08);
+        World.nameTag = new AR.Label("", 0.06, {
+            zOrder: 2
+        });
+        World.drawables.push(World.bannerOverlay);
+        World.drawables.push(World.nameTag);
     },
 
     createTracker: function createTrackerFn() {
@@ -61,11 +24,11 @@ var World = {
             onError: World.onError
         });
 
-        this.tracker = new AR.ObjectTracker(this.targetCollectionResource, {
+        World.tracker = new AR.ObjectTracker(this.targetCollectionResource, {
             onError: World.onError
         });
 
-        this.objectTrackable = new AR.ObjectTrackable(this.tracker, "*", {
+        World.objectTrackable = new AR.ObjectTrackable(World.tracker, "*", {
             drawables: {
                 cam: World.drawables
             },
@@ -75,9 +38,31 @@ var World = {
         });
     },
 
-    objectRecognized: function objectRecognizedFn() {
-        World.hideInfoBar();
+    objectRecognized: function objectRecognizedFn(target) {
+        /*AR.platform.sendJSONObject({ //Sends data to flutter, gotta make a receiver too though
+            "name": target
+        });*/
+        console.log(target);
+        World.targetName = target;
+        World.nameTag = new AR.Label(target, 0.06, {
+            zOrder: 2
+        });
+        if (World.augmentation !== undefined) {
+            World.augmentation.destroy();
+        }
+        World.bannerOverlay.onClick = function() {
+            AR.context.openInBrowser("https://www.google.com");
+        };
+        World.objectTrackable = new AR.ObjectTrackable(World.tracker, target, {
+            drawables: {
+                cam: World.drawables
+            },
+            onObjectRecognized: World.objectRecognized,
+            onObjectLost: World.objectLost,
+            onError: World.onError
+        });
         World.setAugmentationsEnabled(true);
+        World.hideInfoBar();
     },
 
     objectLost: function objectLostFn() {
