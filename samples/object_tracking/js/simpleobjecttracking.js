@@ -7,14 +7,20 @@ var World = {
     },
 
     createOverlays: function createOverlaysFn() {
-        this.banner = new AR.ImageResource("assets/mark.png", {
+        this.banner = new AR.ImageResource("assets/mark2.png", {
             onError: World.onError
         });
-        World.bannerOverlay = new AR.ImageDrawable(this.banner, 0.8);
-        World.nameTag = new AR.Label("Analysing...", 0.06, {
-            /*translate: {
-                y: 0.6
-            },*/
+        World.bannerOverlay = new AR.ImageDrawable(this.banner, 0.16, {
+            translate: {
+                x: 0.22,
+                y: 0.16
+            },
+        });
+        World.nameTag = new AR.Label("Analysing...", 0.045, {
+            translate: {
+                x: 0.23,
+                y: 0.208
+            },
             zOrder: 2
         });
     },
@@ -38,13 +44,13 @@ var World = {
 
     objectRecognized: function objectRecognizedFn(target) {
         AR.platform.sendJSONObject({
-            "name": target
+            "name": target.replaceAll(/[^a-z^\s]/ig, '')
         });
         console.log(target);
-        World.nameTag.text = target;
+        World.nameTag.text = target.replaceAll(/[^a-z^\s]/ig, '');
         World.bannerOverlay.onClick = function() {
             AR.platform.sendJSONObject({
-                "name": target, 
+                "name": target.replaceAll(/[^a-z^\s]/ig, ''), 
                 "clicked": true
             });
         };
