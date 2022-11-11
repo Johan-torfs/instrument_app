@@ -35,9 +35,9 @@ var World = {
     },
 
     objectRecognized: function objectRecognizedFn(target) {
-        /*AR.platform.sendJSONObject({ //Sends data to flutter, gotta make a receiver too though
+        AR.platform.sendJSONObject({ //Sends data to flutter, gotta make a receiver too though
             "name": target
-        });*/
+        });
         console.log(target);
         World.nameTag.text = target;
         World.nameTag = new AR.Label(target, 0.06, {
@@ -49,18 +49,7 @@ var World = {
         World.bannerOverlay.onClick = function() {
             AR.context.openInBrowser("https://www.google.com");
         };
-        World.setAugmentationsEnabled(true);
         World.hideInfoBar();
-    },
-
-    objectLost: function objectLostFn() {
-        World.setAugmentationsEnabled(false);
-    },
-
-    setAugmentationsEnabled: function setAugmentationsEnabledFn(enabled) {
-        for (var i = 0; i < World.drawables.length; i++) {
-            World.drawables[i].enabled = enabled;
-        }
     },
 
     onError: function onErrorFn(error) {

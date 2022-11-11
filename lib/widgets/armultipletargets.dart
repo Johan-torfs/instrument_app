@@ -1,6 +1,7 @@
 import 'package:augmented_reality_plugin_wikitude/architect_widget.dart';
 import 'package:augmented_reality_plugin_wikitude/startupConfiguration.dart';
 import 'package:flutter/material.dart';
+import 'package:instrument_app/models/scanResponse.dart';
 import '../env/keys.dart';
 
 class ArMultipleTargetsWidget extends StatefulWidget {
@@ -70,6 +71,8 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
         onLoadSuccess,
         onLoadFailed);
     architectWidget.resume();
+    architectWidget.setJSONObjectReceivedCallback(
+        (result) => onJSONObjectReceived(result));
   }
 
   Future<void> onLoadSuccess() async {
@@ -79,5 +82,10 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
   Future<void> onLoadFailed(String error) async {
     debugPrint("Failed to load Architect World");
     debugPrint(error);
+  }
+
+  void onJSONObjectReceived(Map<String, dynamic> jsonObject) async {
+    var instrument = scanResponse.fromJson(jsonObject);
+    //Here what to do with the data
   }
 }
