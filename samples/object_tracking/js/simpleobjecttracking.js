@@ -17,7 +17,7 @@ var World = {
     },
 
     createTracker: function createTrackerFn() {
-        this.targetCollectionResource = new AR.TargetCollectionResource("assets/firetruck.wto", {
+        this.targetCollectionResource = new AR.TargetCollectionResource("assets/tracker.wto", {
             onError: World.onError
         });
 
