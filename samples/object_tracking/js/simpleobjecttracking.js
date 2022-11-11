@@ -7,11 +7,14 @@ var World = {
     },
 
     createOverlays: function createOverlaysFn() {
-        this.banner = new AR.ImageResource("assets/banner.jpg", {
+        this.banner = new AR.ImageResource("assets/mark.png", {
             onError: World.onError
         });
-        World.bannerOverlay = new AR.ImageDrawable(this.banner, 0.08);
+        World.bannerOverlay = new AR.ImageDrawable(this.banner, 0.8);
         World.nameTag = new AR.Label("Analysing...", 0.06, {
+            /*translate: {
+                y: 0.6
+            },*/
             zOrder: 2
         });
     },
@@ -29,40 +32,26 @@ var World = {
                 cam: [World.bannerOverlay, World.nameTag]
             },
             onObjectRecognized: World.objectRecognized,
-            onObjectLost: World.objectLost,
             onError: World.onError
         });
     },
 
     objectRecognized: function objectRecognizedFn(target) {
-        AR.platform.sendJSONObject({ //Sends data to flutter, gotta make a receiver too though
+        AR.platform.sendJSONObject({
             "name": target
         });
         console.log(target);
         World.nameTag.text = target;
-        World.nameTag = new AR.Label(target, 0.06, {
-            zOrder: 2
-        });
-        if (World.augmentation !== undefined) {
-            World.augmentation.destroy();
-        }
         World.bannerOverlay.onClick = function() {
-            AR.context.openInBrowser("https://www.google.com");
+            AR.platform.sendJSONObject({
+                "name": target, 
+                "clicked": true
+            });
         };
-        World.hideInfoBar();
     },
 
     onError: function onErrorFn(error) {
         alert(error);
-    },
-
-    hideInfoBar: function hideInfoBarFn() {
-        document.getElementById("infoBox").style.display = "none";
-    },
-
-    showInfoBar: function worldLoadedFn() {
-        document.getElementById("infoBox").style.display = "table";
-        document.getElementById("loadingMessage").style.display = "none";
     }
 };
 

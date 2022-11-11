@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:augmented_reality_plugin_wikitude/architect_widget.dart';
 import 'package:augmented_reality_plugin_wikitude/startupConfiguration.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +87,7 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
   }
 
   void onJSONObjectReceived(Map<String, dynamic> jsonObject) async {
-    var instrument = scanResponse.fromJson(jsonObject);
-    //Here what to do with the data
+    debugPrint(jsonObject["name"]);
+    //jsonObject.name
   }
 }
