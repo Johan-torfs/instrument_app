@@ -1,10 +1,18 @@
+import 'dart:convert';
+
 import 'package:augmented_reality_plugin_wikitude/architect_widget.dart';
 import 'package:augmented_reality_plugin_wikitude/startupConfiguration.dart';
 import 'package:flutter/material.dart';
+import 'package:instrument_app/models/scanResponse.dart';
+import 'package:http/http.dart' as http;
 import '../env/keys.dart';
 
 class ArMultipleTargetsWidget extends StatefulWidget {
-  const ArMultipleTargetsWidget({Key? key}) : super(key: key);
+  final Function(String) onClick;
+  const ArMultipleTargetsWidget({
+    Key? key,
+    required this.onClick,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() =>
@@ -65,11 +73,13 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
   }
 
   Future<void> onArchitectWidgetCreated() async {
-    // architectWidget.load(
-    //     "samples/03_MultipleTargets_1_MultipleTargets/index.html",
-    //     onLoadSuccess,
-    //     onLoadFailed);
-    // architectWidget.resume();
+    architectWidget.load(
+        "samples/object_tracking/index.html",
+        onLoadSuccess,
+        onLoadFailed);
+    architectWidget.resume();
+    architectWidget.setJSONObjectReceivedCallback(
+        (result) => onJSONObjectReceived(result));
   }
 
   Future<void> onLoadSuccess() async {
@@ -79,5 +89,23 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
   Future<void> onLoadFailed(String error) async {
     debugPrint("Failed to load Architect World");
     debugPrint(error);
+  }
+
+  void onJSONObjectReceived(Map<String, dynamic> jsonObject) async {
+    if (jsonObject["clicked"]) {
+      dispose();
+      widget.onClick(jsonObject["name"]);
+    } else {
+      incrementCounter(jsonObject["name"]);
+    }
+  }
+
+  Future<http.Response> incrementCounter(String name) {
+    return http.put(
+      Uri.parse('https://api-counter-johantorfs.cloud.okteto.net/' + name),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
   }
 }
