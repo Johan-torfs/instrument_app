@@ -44,7 +44,8 @@ var World = {
 
     objectRecognized: function objectRecognizedFn(target) {
         AR.platform.sendJSONObject({
-            "name": target.replaceAll(/[^a-z^\s]/ig, '')
+            "name": target.replaceAll(/[^a-z^\s]/ig, ''),
+            "clicked": false
         });
         console.log(target);
         World.nameTag.text = target.replaceAll(/[^a-z^\s]/ig, '');

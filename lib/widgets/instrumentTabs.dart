@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'historyPage.dart';
+import '../pages/historyPage.dart';
 import 'instrument.dart';
 import 'musicPage.dart';
 import 'musicianPage.dart';
@@ -56,7 +56,7 @@ class InstrumentTabs extends StatelessWidget {
             padding: const EdgeInsets.only(
                 top: 104.0, left: 16.0, right: 16.0, bottom: 16.0),
             child: const TabBarView(
-                children: [HistoryPage(), MusicianPage(), MusicPage()]),
+                children: [HistoryPage(instrumentName: "Flute"), MusicianPage(), MusicPage()]),
           ),
         ));
   }

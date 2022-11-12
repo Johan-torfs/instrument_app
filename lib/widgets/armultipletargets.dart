@@ -4,10 +4,15 @@ import 'package:augmented_reality_plugin_wikitude/architect_widget.dart';
 import 'package:augmented_reality_plugin_wikitude/startupConfiguration.dart';
 import 'package:flutter/material.dart';
 import 'package:instrument_app/models/scanResponse.dart';
+import 'package:http/http.dart' as http;
 import '../env/keys.dart';
 
 class ArMultipleTargetsWidget extends StatefulWidget {
-  const ArMultipleTargetsWidget({Key? key}) : super(key: key);
+  final Function(String) onClick;
+  const ArMultipleTargetsWidget({
+    Key? key,
+    required this.onClick,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() =>
@@ -87,7 +92,20 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
   }
 
   void onJSONObjectReceived(Map<String, dynamic> jsonObject) async {
-    debugPrint(jsonObject["name"]);
-    //jsonObject.name
+    if (jsonObject["clicked"]) {
+      dispose();
+      widget.onClick(jsonObject["name"]);
+    } else {
+      incrementCounter(jsonObject["name"]);
+    }
+  }
+
+  Future<http.Response> incrementCounter(String name) {
+    return http.put(
+      Uri.parse('https://api-counter-johantorfs.cloud.okteto.net/' + name),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
   }
 }
