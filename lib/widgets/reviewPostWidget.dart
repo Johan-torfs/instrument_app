@@ -15,10 +15,9 @@ class ReviewPostWidget extends StatefulWidget {
 }
 
 class _ReviewPostWidgetState extends State<ReviewPostWidget> {
-  final commentController = TextEditingController();
-  
-  int submitStep = 0;
-  int rating = 0;
+  TextEditingController _commentController = TextEditingController();
+  int _submitStep = 0;
+  int _rating = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class _ReviewPostWidgetState extends State<ReviewPostWidget> {
       child: Stack(
         children: <Widget> [
           TextField(
-            controller: commentController,
+            controller: _commentController,
             keyboardType: TextInputType.multiline,
             maxLines: 3,
             decoration: InputDecoration(
@@ -44,11 +43,11 @@ class _ReviewPostWidgetState extends State<ReviewPostWidget> {
                 color: Colors.blue,
               ),
               onPressed: () => setState(() {
-                this.submitStep = 1;
+                this._submitStep = 1;
               }
             ))
           ),
-          if (this.submitStep == 1) Positioned(
+          if (this._submitStep == 1) Positioned(
             bottom: 8.0,
             right: 8.0,
             top: 8.0,
@@ -69,7 +68,7 @@ class _ReviewPostWidgetState extends State<ReviewPostWidget> {
                 children: <Widget> [
                   GestureDetector(
                     onTapUp: (TapUpDetails details) => _onTapUp(details),
-                    child: RatingWidget(rating: this.rating, size: 40)
+                    child: RatingWidget(rating: this._rating, size: 40)
                   ),
                   Spacer(),
                   IconButton(
@@ -79,7 +78,10 @@ class _ReviewPostWidgetState extends State<ReviewPostWidget> {
                       color: Colors.blue,
                     ),
                     onPressed: () {
-                      this.widget.postReview(this.commentController.text, this.rating);
+                      this.widget.postReview(this._commentController.text, this._rating);
+                      this._commentController.text = "";
+                      this._rating = 0;
+                      this._submitStep = 0;
                     }
                   ),
                 ]
@@ -94,7 +96,7 @@ class _ReviewPostWidgetState extends State<ReviewPostWidget> {
   _onTapUp(TapUpDetails details) {
     var x = details.localPosition.dx;
     setState(() {
-      this.rating = (x/20).round();
+      this._rating = (x/20).round();
     });
   }
 }

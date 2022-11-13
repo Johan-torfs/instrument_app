@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../models/piece.dart';
+import '../models/review.dart';
 import 'ratingWidget.dart';
 import 'reviewPostWidget.dart';
 
@@ -20,6 +21,22 @@ class ReviewWidget extends StatefulWidget {
 }
 
 class _ReviewWidgetState extends State<ReviewWidget> {
+  Piece? _piece;
+
+  @override
+  void initState() {
+    super.initState();
+    _piece = this.widget.piece;
+  }
+
+  List<Review> getReviews() {
+    List<Review> result = <Review>[];
+    this._piece?.reviews.forEach((review) {
+      result.add(review);
+    });
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,13 +45,13 @@ class _ReviewWidgetState extends State<ReviewWidget> {
         children: <Widget> [
           ReviewPostWidget(
             postReview: (String comment, int rating) {
-              this.postReview(this.widget.piece.name, comment, rating);
-            },
+              this.postReview(this._piece?.name, comment, rating);
+            }
           ),
           SizedBox(height: 20.0),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: this.widget.piece.reviews.map((review) => 
+            children: getReviews().map((review) => 
               Container(
                 margin: EdgeInsets.only(bottom: 5.0),
                 padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 4.0, bottom: 8.0),
@@ -63,15 +80,19 @@ class _ReviewWidgetState extends State<ReviewWidget> {
     );
   }
 
-  Future<http.Response> postReview(String name, String comment, int rating) async {
+  Future postReview(String? name, String comment, int rating) async {
     var map = new Map<String, dynamic>();
     map['pieceName'] = name;
     map['comment'] = comment;
     map['rating'] = rating.toString();
 
-    return http.post(
+    final response = await http.post(
       Uri.parse('https://api-edge-johantorfs.cloud.okteto.net/review'),
       body: map,
     );
+
+    setState(() {
+      this._piece?.reviews.insert(0, Review.fromJson(jsonDecode(response.body)));
+    });
   }
 }

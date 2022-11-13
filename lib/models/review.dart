@@ -17,10 +17,17 @@ class Review {
   });
 
   factory Review.fromJson(Map<String, dynamic> json) {
+    String comment; 
+    try {
+      comment = utf8.decode(latin1.encode(json['comment']));
+    } catch(e) {
+      comment = json['comment'];
+    }
+
     return Review(
       id: json['id'],
       rating: json['rating'],
-      comment: utf8.decode(latin1.encode(json['comment'])),
+      comment: comment,
       pieceName: utf8.decode(latin1.encode(json['pieceName'])),
       piece: json['piece'] != null ? Piece.fromJson(json['piece']) : null,
     );
