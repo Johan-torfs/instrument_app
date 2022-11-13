@@ -168,7 +168,6 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   Future<Piece> fetchPiece(String name) async {
-    print(Uri.parse('https://api-edge-johantorfs.cloud.okteto.net/piece/' + name));
     final response = await http
         .get(Uri.parse('https://api-edge-johantorfs.cloud.okteto.net/piece/' + name));
 
