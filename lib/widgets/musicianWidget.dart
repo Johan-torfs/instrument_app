@@ -28,7 +28,7 @@ class MusicianWidget extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  musician.yearOfBirth.toString() + " - " + musician.yearOfDeath!.toString(),
+                  musician.yearOfBirth.toString() + (musician.yearOfDeath == null ? "" : " - " + musician.yearOfDeath!.toString()),
                   style: TextStyle(
                     fontSize: 12.0,
                   ),
