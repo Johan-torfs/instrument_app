@@ -5,7 +5,7 @@ class Musician {
   final int id;
   final String name;
   final int yearOfBirth;
-  final int yearOfDeath;
+  final int? yearOfDeath;
   final Instrument? instrument;
 
   const Musician({
